@@ -30,4 +30,4 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
-git log --merges --grep="Merge pull request" --pretty=format:"- %s %b" --right-only ${1}..${2} | sed -e "s|Merge pull request ||" -e "s|from [^ ]* ||"
+git log --oneline --grep="(#[0-9]*)" --grep="Merge pull request" --pretty=format:"- %s %b" --right-only ${1}..${2} | sed -e "s|Merge pull request ||" -e "s|from [^ ]* ||" -e "s|^- \(.*\)(\(#[0-9]*\)).*$|- \2 \1|" -e "/^[^-].*$/d"
